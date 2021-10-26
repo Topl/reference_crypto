@@ -11,6 +11,49 @@ colorama.init()
 heads_up_display = True
 
 
+messages = ["language shares a common tongue",
+            "huddled masses with socks",
+            "arriving on time and late",
+            "wonder where width went",
+            "me or it - either way you jump off",
+            "just over that hill: the one one wants one",
+            "my legs cramp, my head moves its mouth",
+            "strip language of emotion, end up with operate",
+            "nevertheless, again more",
+            "predicate, pontificate, travel long distances and speak truth",
+            "it as do be it he me or",
+            "in a short while craft - not much to do about it",
+            "turn a single letter - it becomes a bird or later",
+            "a string pulled out of a word endlessly, never snaps",
+            "disabled and detained, probably dispelled",
+            "place it on a stump",
+            "nature speaks to those who disappear into it",
+            "all the images my eyes have seen now memory?",
+            "limited potential so must rely on hope or help",
+            "olfactory workers on break"]
+
+seeds = ["lineage",
+         "order",
+         "threshold",
+         "conductor",
+         "vigorous",
+         "swiftly",
+         "enumerate",
+         "recede",
+         "vacuum",
+         "pavement",
+         "interference",
+         "quagmire",
+         "detritus",
+         "friendly",
+         "negligence",
+         "lounge",
+         "utopia",
+         "fragment",
+         "isolate",
+         "pretend"]
+
+
 def hash(msg: bytes) -> bytes:
     digest = blake2b(digest_size=32)
     digest.update(msg)
@@ -115,6 +158,65 @@ class SumSignature:
             out = out + wi
         return out
 
+    def print(self):
+        print("Verification Key: ["+self.vk.hex()+"]")
+        print("Sigma: ["+print_split(self.sigma.hex())+"]")
+        i = 0
+        for wi in self.w:
+            print("W["+str(i)+"]: ["+wi.hex()+"]")
+            i = i + 1
+
+
+def print_split(string: str) -> str:
+    n = 64
+    chunks = [string[j:j + n] for j in range(0, len(string), n)]
+    out = ""
+    j = 0
+    for chunk in chunks:
+        if j < len(chunks)-1:
+            out = out + chunk + "\n"
+        else:
+            out = out + chunk
+        j = j + 1
+    return out
+
+
+def print_key(n: Node):
+    (v, l, r) = n.get()
+    if l is None and isinstance(r, Node):
+        (sr, wl, wr) = v
+        if heads_up_display:
+            print("1 ", chex(wl), chex(wr), chex(hash(wl + wr)))
+        print_key(r)
+    elif r is None and isinstance(l, Node):
+        (sr, wl, wr) = v
+        if heads_up_display:
+            print("0 ", chex(wl), chex(wr), chex(hash(wl + wr)))
+        print_key(l)
+
+
+def print_vector(n: Node):
+    (v, l, r) = n.get()
+    print("Height:", height(n))
+    if l is None and isinstance(r, Node):
+        (sr, wl, wr) = v
+        print("Binary configuration: 1")
+        print("Right Seed:    ["+sr.hex()+"]")
+        print("Left Witness:  ["+wl.hex()+"]")
+        print("Right Witness: ["+wr.hex()+"]")
+        print_vector(r)
+    elif r is None and isinstance(l, Node):
+        (sr, wl, wr) = v
+        print("Binary configuration: 0")
+        print("Right Seed:    ["+sr.hex()+"]")
+        print("Left Witness:  ["+wl.hex()+"]")
+        print("Right Witness: ["+wr.hex()+"]")
+        print_vector(l)
+    else:
+        (sk, vk) = v
+        print("Ed25519 Secret Key:       ["+sk.encode().hex()+"]")
+        print("Ed25519 Verification Key: ["+vk.encode().hex()+"]")
+
 
 def height(n) -> int:
     if isinstance(n, Node):
@@ -147,8 +249,8 @@ def test_signature(vk: VerifyKey, sigma: bytes, m: bytes) -> bool:
 
 
 def doubling_prng(s: bytes) -> (bytes, bytes):
-    sl = hash(b'0' + s)
-    sr = hash(b'1' + s)
+    sl = hash(bytes(0x00) + s)
+    sr = hash(bytes(0x01) + s)
     return sl, sr
 
 
@@ -207,20 +309,6 @@ def verification_key_sum(n: Node) -> bytes:
     return hash(wl + wr)
 
 
-def print_key(n: Node):
-    (v, l, r) = n.get()
-    if l is None and isinstance(r, Node):
-        (sr, wl, wr) = v
-        if heads_up_display:
-            print("1 ", chex(wl), chex(wr), chex(hash(wl + wr)))
-        print_key(r)
-    elif r is None and isinstance(l, Node):
-        (sr, wl, wr) = v
-        if heads_up_display:
-            print("0 ", chex(wl), chex(wr), chex(hash(wl + wr)))
-        print_key(l)
-
-
 def key_time_sum(n: Node) -> int:
     if n.is_leaf():
         return 0
@@ -258,12 +346,12 @@ def evolve_key(n: Node, t: int) -> Node:
                     (sr, ul, ur) = v
                     (sk, vk) = keygen(sr)
                     nr = Node((sk, vk), None, None)
-                    return Node(v, None, nr)
+                    return Node((bytes(32), ul, ur), None, nr)
                 else:
                     (sr, wl, wr) = v
                     nr = key_gen_sum(sr, h - 1)
                     nrp = evolve_key(nr, tp)
-                    return Node(v, None, nrp)
+                    return Node((bytes(32), wl, wr), None, nrp)
             else:
                 nr = evolve_key(r, tp)
                 return Node(v, None, nr)
