@@ -1,0 +1,82 @@
+[
+    {
+        "pages": [
+            {
+                "keyLoc": "internal",
+                "keys": [
+                    "string",
+                    "number",
+                    "bool"
+                ]
+            },
+            {
+                "keyLoc": "reference",
+                "keys": [
+                    "object.string",
+                    "object.number",
+                    "object.bool"
+                ]  
+            }
+        ]
+    },
+    {
+        "pages": [
+            {
+                "keyLoc": "internal",
+                "keys": [
+                    "string"
+                ]
+            },
+            {
+                "keyLoc": "internal",
+                "keys": [
+                    "number"
+                ]
+            },
+            {
+                "keyLoc": "internal",
+                "keys": [
+                    "bool"
+                ]
+            },
+            {
+                "keyLoc": "reference",
+                "keys": [
+                    "object.string",
+                    "object.number",
+                    "object.bool"
+                ]  
+            }
+        ]
+    },
+    {
+        "pages": [
+            {
+                "keyLoc": "internal",
+                "keys": [
+                    "string",
+                    "number",
+                    "bool"
+                ]
+            },
+            {
+                "keyLoc": "reference",
+                "keys": [
+                    "object.string"
+                ]  
+            },
+            {
+                "keyLoc": "reference",
+                "keys": [
+                    "object.number"
+                ]  
+            },
+            {
+                "keyLoc": "reference",
+                "keys": [
+                    "object.bool"
+                ]  
+            }
+        ]
+    }
+]
