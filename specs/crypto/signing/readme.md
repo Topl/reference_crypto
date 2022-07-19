@@ -1,13 +1,11 @@
 ## Digital signature specification
 Secret keys are used to provide bearer level authentication to network participants via elliptic curve based signing routines. 
 
-This section describes Topl's supported signing routines and provides test vectors to ensure cryptographic integrity and facilitate integrations with the Topl protocol.
-
-Additional information on supported generation schemes, including hierarchical deterministic (HD) key derivation, may be found in `/generation`
+This section describes Topl's supported signing routines and provides test vectors to ensure cryptographic integrity and facilitate integrations with the Topl protocol. For information on the key generation process, including hierarchical deterministic (HD) key derivation, please refer to `/generation`[link](/specs/crypto/generation/)
 
 Below are listed the supported signature constructions
 ### Curve25519-Axolotl
-- [Reference](https://github.com/signalapp/libaxolotl-j2me/blob/master/src/main/java/org/whispersystems/libaxolotl/ecc/Curve.java)
+- [Reference](https://github.com/signalapp/libaxolotl-j2me/blob/master/src/main/java/org/whispersystems/libaxolotl)
 - [Link](/specs/crypto/signing/Curve25519-Axolotl)
 - [Test vectors](/specs/crypto/signing/Curve25519-Axolotl/Curve25519Axolotl.json)
 ### Ed25519
