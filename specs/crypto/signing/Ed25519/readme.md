@@ -1,5 +1,5 @@
 ## Description
-Test vectors for Topl implementation of Ed25519 signature routine compatible with [RFC-8032](https://datatracker.ietf.org/doc/html/rfc8032). Message values are those specified in section 7.1 of this the reference specification.
+Test vectors for Topl implementation of Ed25519 signature routine compatible with [RFC-8032](https://datatracker.ietf.org/doc/html/rfc8032). Message values are those specified in section 7.1 of the reference specification.
 
 All values below are given as hex encoded (base16) strings unless otherwise specified.
 

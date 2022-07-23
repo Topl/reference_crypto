@@ -1,8 +1,7 @@
 ## Digital signature specification
 Secret keys provide bearer level authentication to network participants via elliptic curve based signing routines. 
 
-This section describes Topl's supported signing routines and provides test vectors to ensure cryptographic integrity and facilitate integrations with the Topl protocol. 
-For information on the key generation process, including hierarchical deterministic (HD) key derivation, please refer to `/generation`
+This section describes Topl's supported signing routines and provides test vectors to ensure cryptographic integrity and facilitate integrations with the Topl protocol. For information on the key generation process, including hierarchical deterministic (HD) key derivation, please refer to `/generation`.
 
 Below are listed the supported signature constructions
 ### Curve25519-Axolotl

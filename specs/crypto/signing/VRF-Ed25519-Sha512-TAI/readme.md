@@ -1,7 +1,7 @@
 ## Description
 Test vectors for Topl implementation of [ECVRF-EDWARDS25519-SHA512-TAI](https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-vrf-09). Test vector are adopted from the underlying Edwards25519 signing routine as [given here](https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-vrf-09#appendix-A.3).
 
-All values below are Hex encoded byte representations unless otherwise specified.
+All values below are given as hex encoded (base16) strings unless otherwise specified.
 
 ## Reference implementations
 - [Scala](https://github.com/Topl/Bifrost/blob/tetra/crypto/src/main/scala/co/topl/crypto/signing/Ed25519VRF.scala)
